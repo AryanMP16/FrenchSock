@@ -6,8 +6,10 @@
 
 int main() {
 	Board board;
-	AI_Player whitePlayer("AI", "white", &board);
+	Human_Player whitePlayer("Human", "white", &board);
 	AI_Player blackPlayer("AI", "black", &board);
+
+	board.viewBoard();
 	
 	Game game(&board, &whitePlayer, &blackPlayer);
 

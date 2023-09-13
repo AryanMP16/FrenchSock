@@ -65,3 +65,10 @@ AI_Player::move AI_Player::chooseMoveHelper(int depth, std::string maximizingPla
 	}
 
 }
+
+std::string Human_Player::chooseMove() {
+	std::string toReturn;
+	std::cout << std::endl << "Type in a move:\t";
+	std::cin >> toReturn;
+	return toReturn;
+}

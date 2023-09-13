@@ -33,4 +33,10 @@ public:
 	std::string chooseMove();
 };
 
+class Human_Player : public Player {
+public:
+	Human_Player(std::string name, std::string side, Board* board) : Player(name, side, board) {}
+	std::string chooseMove();
+};
+
 #endif
