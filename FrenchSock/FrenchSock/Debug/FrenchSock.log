@@ -1,2 +1,8 @@
-﻿  main.cpp
+﻿  Player.cpp
+C:\Users\aryan\Documents\GitHub\FrenchSock\FrenchSock\FrenchSock\Player.cpp(8,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\aryan\Documents\GitHub\FrenchSock\FrenchSock\FrenchSock\Player.cpp(38,29): warning C4018: '<': signed/unsigned mismatch
+C:\Users\aryan\Documents\GitHub\FrenchSock\FrenchSock\FrenchSock\Player.cpp(41,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\aryan\Documents\GitHub\FrenchSock\FrenchSock\FrenchSock\Player.cpp(57,29): warning C4018: '<': signed/unsigned mismatch
+C:\Users\aryan\Documents\GitHub\FrenchSock\FrenchSock\FrenchSock\Player.cpp(60,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\aryan\Documents\GitHub\FrenchSock\FrenchSock\FrenchSock\Player.cpp(14): warning C4715: 'Bad_AI_Player::chooseMove': not all control paths return a value
   FrenchSock.vcxproj -> C:\Users\aryan\Documents\GitHub\FrenchSock\FrenchSock\Debug\FrenchSock.exe

@@ -34,6 +34,9 @@ std::vector<std::string> Board::legalMoves(std::string squareOfInterestString) {
 			for (int i = -1; i < 2; i++) {
 				if (i == 0 && (rankIndex - 1) >= 0 && (rankIndex + 1) <= 7 && (fileIndex + i) >= 0 && (fileIndex + i) <= 7 && boardArr[rankIndex + 1][fileIndex + i].piece == '.') {
 					toReturn.push_back(boardArr[rankIndex + 1][fileIndex + i].file + std::to_string(boardArr[rankIndex + 1][fileIndex + i].rank));
+					if (boardArr[rankIndex + 2][fileIndex + i].piece == '.' && rankIndex == 1) {
+						toReturn.push_back(boardArr[rankIndex + 2][fileIndex + i].file + std::to_string(boardArr[rankIndex + 2][fileIndex + i].rank));
+					}
 				}
 				else if ((rankIndex - 1) >= 0 && (rankIndex + 1) <= 7 && (fileIndex + i) >= 0 && (fileIndex + i) <= 7 && i != 0 && (isupper(boardArr[rankIndex + 1][fileIndex + i].piece) == false) && boardArr[rankIndex + 1][fileIndex + i].piece != '.')
 					toReturn.push_back(boardArr[rankIndex + 1][fileIndex + i].file + std::to_string(boardArr[rankIndex + 1][fileIndex + i].rank));
@@ -43,6 +46,9 @@ std::vector<std::string> Board::legalMoves(std::string squareOfInterestString) {
 			for (int i = -1; i < 2; i++) {
 				if (i == 0 && (rankIndex - 1) >= 0 && (rankIndex + 1) <= 7 && (fileIndex + i) >= 0 && (fileIndex + i) <= 7 && boardArr[rankIndex - 1][fileIndex + i].piece == '.') {
 					toReturn.push_back(boardArr[rankIndex - 1][fileIndex + i].file + std::to_string(boardArr[rankIndex - 1][fileIndex + i].rank));
+					if (boardArr[rankIndex - 2][fileIndex + i].piece == '.' && rankIndex == 6) {
+						toReturn.push_back(boardArr[rankIndex - 2][fileIndex + i].file + std::to_string(boardArr[rankIndex - 2][fileIndex + i].rank));
+					}
 				}
 				else if ((rankIndex - 1) >= 0 && (rankIndex + 1) <= 7 && (fileIndex + i) >= 0 && (fileIndex + i) <= 7 && i != 0 && (isupper(boardArr[rankIndex - 1][fileIndex + i].piece) == true) && boardArr[rankIndex - 1][fileIndex + i].piece != '.')
 					toReturn.push_back(boardArr[rankIndex - 1][fileIndex + i].file + std::to_string(boardArr[rankIndex - 1][fileIndex + i].rank));

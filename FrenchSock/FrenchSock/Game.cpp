@@ -11,9 +11,9 @@ void Game::play() const {
 			chosenMove = whitePlayer->chooseMove();
 			board->makeMove(chosenMove);
 
-			std::cout << std::endl;
+			/*std::cout << std::endl;
 			std::cout << chosenMove;
-			std::cout << std::endl;
+			std::cout << std::endl;*/
 		}
 		else {
 			chosenMove = blackPlayer->chooseMove();
@@ -21,9 +21,9 @@ void Game::play() const {
 		}
 
 		///////////////FOR TESTING://////////////
-		/*std::cout << std::endl;
+		std::cout << std::endl;
 		(*board).viewBoard();
-		std::cout << std::endl;*/
+		std::cout << std::endl;
 		/////////////^^FOR TESTING://////////////
 	}
 }

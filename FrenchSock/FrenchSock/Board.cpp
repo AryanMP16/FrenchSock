@@ -135,7 +135,7 @@ double Board::adjustEvalByPiecePlacement(char piece, std::string file_rank) cons
 		{-1, -1, -1, -1, -1, -1, -1, -1}, //1st rank
 		{0, 0, 0, 0, 0, 0, 0, 0}, //2nd rank
 		{0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1}, //3rd rank
-		{0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2}, //4th rank
+		{0.2, 0.2, 0.2, 0.4, 0.4, 0.2, 0.2, 0.2}, //4th rank
 		{0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3}, //5th rank
 		{0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4}, //6th rank
 		{0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5}, //7th rank
@@ -147,7 +147,7 @@ double Board::adjustEvalByPiecePlacement(char piece, std::string file_rank) cons
 		{0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5}, //2nd rank
 		{0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4}, //3rd rank
 		{0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3}, //4th rank
-		{0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2}, //5th rank
+		{0.2, 0.2, 0.2, 0.4, 0.4, 0.2, 0.2, 0.2}, //5th rank
 		{0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1}, //6th rank
 		{0, 0, 0, 0, 0, 0, 0, 0}, //7th rank
 		{-1, -1, -1, -1, -1, -1, -1, -1} //8th rank
@@ -233,24 +233,28 @@ double Board::adjustEvalByPiecePlacement(char piece, std::string file_rank) cons
 		}
 	}
 
+	double toReturn = 0;
+
 	if (piece == 'P')
-		return whitePawnPlacement[rankInt][fileInt];
+		toReturn = whitePawnPlacement[rankInt][fileInt];
 	else if (piece == 'p')
-		return blackPawnPlacement[rankInt][fileInt];
+		toReturn = blackPawnPlacement[rankInt][fileInt];
 	else if (piece == 'R')
-		return whiteRookPlacement[rankInt][fileInt];
+		toReturn = whiteRookPlacement[rankInt][fileInt];
 	else if (piece == 'r')
-		return blackRookPlacement[rankInt][fileInt];
+		toReturn = blackRookPlacement[rankInt][fileInt];
 	else if (piece == 'n' || piece == 'N')
-		return knightPlacement[rankInt][fileInt];
+		toReturn = knightPlacement[rankInt][fileInt];
 	else if (piece == 'b' || piece == 'B')
-		return bishopPlacement[rankInt][fileInt];
+		toReturn = bishopPlacement[rankInt][fileInt];
 	else if (piece == 'q' || piece == 'Q')
-		return queenPlacement[rankInt][fileInt];
+		toReturn = queenPlacement[rankInt][fileInt];
 	else if (piece == 'k' || piece == 'K')
-		return kingPlacement[rankInt][fileInt];
+		toReturn = kingPlacement[rankInt][fileInt];
 	else {
 		std::cout << "Abort 1 called from Board::adjustEvalByPiecePlacement";
 		abort();
 	}
+
+	return toReturn;
 }

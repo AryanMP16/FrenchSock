@@ -21,7 +21,7 @@ std::string AI_Player::chooseMove() {
 AI_Player::move AI_Player::chooseMoveHelper(int depth, std::string maximizingPlayer, Board currBoard, std::string moveMadeToGetHere /*null move*/) { //the "actual AI" algorithm
 	//initializing current node -- O(1)
 	move currentNode{moveMadeToGetHere, currBoard.evaluatePosition()};
-																			
+
 	//creting a copy of the board so we don't mess up the actual board
 	Board boardCpy = currBoard;
 
