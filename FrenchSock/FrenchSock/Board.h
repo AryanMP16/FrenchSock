@@ -21,6 +21,7 @@ public:
 	double evaluatePosition();
 	int getPointValue(char piece) const;
 	square viewSquare(int rank, int file) const;
+	double adjustEvalByPiecePlacement(char piece, std::string file_rank) const;
 private:
 	square boardArr[8][8]; //first index is rank, second is file
 	char blackPieces[8] = { 'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r' };

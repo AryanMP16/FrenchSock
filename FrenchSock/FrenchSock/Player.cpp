@@ -14,7 +14,7 @@ std::string Bad_AI_Player::chooseMove() { //choses the first legal move for the 
 }
 
 std::string AI_Player::chooseMove() {
-	move chosenMove = chooseMoveHelper(2, playerSide, *playerBoard);
+	move chosenMove = chooseMoveHelper(3, playerSide, *playerBoard);
 	return chosenMove.algebraicMove;
 }
 
@@ -27,7 +27,7 @@ AI_Player::move AI_Player::chooseMoveHelper(int depth, std::string maximizingPla
 
 	//determine remaining pieces based on color -- O(1)
 	std::vector<Board::square> piecesRemaining;
-	maximizingPlayer == "white" ? piecesRemaining = playerBoard->piecesLeft("white") : piecesRemaining = playerBoard->piecesLeft("black");
+	maximizingPlayer == "white" ? piecesRemaining = boardCpy.piecesLeft("white") : piecesRemaining = boardCpy.piecesLeft("black");
 
 	//base case -- O(1)
 	if (depth == 0 /*OR checkmate, which hasn't been coded in yet*/)
@@ -41,6 +41,10 @@ AI_Player::move AI_Player::chooseMoveHelper(int depth, std::string maximizingPla
 			for (int i = 0; i < moves.size(); i++) {
 				boardCpy.makeMove(squareOfPiece + ":" + moves[i]);
 				move nextEval{squareOfPiece + ":" + moves[i], chooseMoveHelper(depth - 1, "black", boardCpy, squareOfPiece + ":" + moves[i]).eval};
+
+				//call function to adjust evaluation based on piece placement
+				nextEval.eval += boardCpy.adjustEvalByPiecePlacement(boardCpy[moves[i]]->piece, moves[i]);
+
 				if (nextEval.eval > maxEvalMove.eval)
 					maxEvalMove = nextEval;
 				boardCpy.makeMove(moves[i] + ":" + squareOfPiece);
@@ -56,6 +60,10 @@ AI_Player::move AI_Player::chooseMoveHelper(int depth, std::string maximizingPla
 			for (int i = 0; i < moves.size(); i++) {
 				boardCpy.makeMove(squareOfPiece + ":" + moves[i]);
 				move nextEval{ squareOfPiece + ":" + moves[i], chooseMoveHelper(depth - 1, "white", boardCpy, squareOfPiece + ":" + moves[i]).eval };
+
+				//call function to adjust evaluation based on piece placement
+				nextEval.eval -= boardCpy.adjustEvalByPiecePlacement(boardCpy[moves[i]]->piece, moves[i]);
+
 				if (nextEval.eval < minEvalMove.eval)
 					minEvalMove = nextEval;
 				boardCpy.makeMove(moves[i] + ":" + squareOfPiece);

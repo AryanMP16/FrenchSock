@@ -129,3 +129,128 @@ double Board::evaluatePosition() {
 Board::square Board::viewSquare(int rank, int file) const {
 	return boardArr[rank][file];
 }
+
+double Board::adjustEvalByPiecePlacement(char piece, std::string file_rank) const {
+	double whitePawnPlacement[8][8] = {
+		{-1, -1, -1, -1, -1, -1, -1, -1}, //1st rank
+		{0, 0, 0, 0, 0, 0, 0, 0}, //2nd rank
+		{0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1}, //3rd rank
+		{0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2}, //4th rank
+		{0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3}, //5th rank
+		{0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4}, //6th rank
+		{0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5}, //7th rank
+		{9, 9, 9, 9, 9, 9, 9, 9} //8th rank
+	};
+
+	double blackPawnPlacement[8][8] = {
+		{9, 9, 9, 9, 9, 9, 9, 9}, //1st rank
+		{0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5}, //2nd rank
+		{0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4}, //3rd rank
+		{0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3, 0.3}, //4th rank
+		{0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2}, //5th rank
+		{0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1}, //6th rank
+		{0, 0, 0, 0, 0, 0, 0, 0}, //7th rank
+		{-1, -1, -1, -1, -1, -1, -1, -1} //8th rank
+	};
+
+	double bishopPlacement[8][8] = {
+		{0.5, 0.4, 0.3, 0.2, 0.2, 0.3, 0.4, 0.5}, //1st rank
+		{0.4, 0.5, 0.3, 0.2, 0.2, 0.3, 0.5, 0.4}, //2nd rank
+		{0.3, 0.4, 0.5, 0.2, 0.2, 0.5, 0.4, 0.3}, //3rd rank
+		{0.2, 0.3, 0.4, 0.5, 0.5, 0.4, 0.3, 0.2}, //4th rank
+		{0.2, 0.3, 0.4, 0.5, 0.5, 0.4, 0.3, 0.2}, //5th rank
+		{0.3, 0.4, 0.5, 0.2, 0.2, 0.5, 0.4, 0.3}, //6th rank
+		{0.4, 0.5, 0.3, 0.2, 0.2, 0.3, 0.5, 0.4}, //7th rank
+		{0.5, 0.4, 0.3, 0.2, 0.2, 0.3, 0.4, 0.5} //8th rank
+	};
+
+	double whiteRookPlacement[8][8] = {
+		{0, 0, 0.1, 0.2, 0.2, 0.1, 0, 0}, //1st rank
+		{0, 0, 0.1, 0.2, 0.2, 0.1, 0, 0}, //2nd rank
+		{0, 0, 0.1, 0.2, 0.2, 0.1, 0, 0}, //3rd rank
+		{0.1, 0.1, 0.2, 0.3, 0.3, 0.2, 0.1, 0.1}, //4th rank
+		{0.1, 0.1, 0.2, 0.3, 0.3, 0.2, 0.1, 0.1}, //5th rank
+		{0, 0, 0.1, 0.2, 0.2, 0.1, 0, 0}, //6th rank
+		{0.3, 0.3, 0.4, 0.5, 0.5, 0.4, 0.3, 0.3}, //7th rank
+		{0.1, 0.1, 0.2, 0.3, 0.3, 0.2, 0.1, 0.1} //8th rank
+	};
+
+	double blackRookPlacement[8][8] = {
+		{0.1, 0.1, 0.2, 0.3, 0.3, 0.2, 0.1, 0.1}, //1st rank
+		{0.3, 0.3, 0.4, 0.5, 0.5, 0.4, 0.3, 0.3}, //2nd rank
+		{0, 0, 0.1, 0.2, 0.2, 0.1, 0, 0}, //3rd rank
+		{0.1, 0.1, 0.2, 0.3, 0.3, 0.2, 0.1, 0.1}, //4th rank
+		{0.1, 0.1, 0.2, 0.3, 0.3, 0.2, 0.1, 0.1}, //5th rank
+		{0, 0, 0.1, 0.2, 0.2, 0.1, 0, 0}, //6th rank
+		{0, 0, 0.1, 0.2, 0.2, 0.1, 0, 0}, //7th rank
+		{0, 0, 0.1, 0.2, 0.2, 0.1, 0, 0} //8th rank
+	};
+
+	double queenPlacement[8][8] = {
+		{0.3, 0.1, 0.2, 0.3, 0.3, 0.2, 0.1, 0.3}, //1st rank
+		{0.3, 0.3, 0.4, 0.5, 0.5, 0.4, 0.3, 0.3}, //2nd rank
+		{0, 0, 0.1, 0.3, 0.3, 0.1, 0, 0}, //3rd rank
+		{0.1, 0.1, 0.2, 0.5, 0.5, 0.2, 0.1, 0.1}, //4th rank
+		{0.1, 0.1, 0.2, 0.5, 0.5, 0.2, 0.1, 0.1}, //5th rank
+		{0, 0, 0.1, 0.3, 0.3, 0.1, 0, 0}, //6th rank
+		{0.3, 0.3, 0.4, 0.5, 0.5, 0.4, 0.3, 0.3}, //7th rank
+		{0.3, 0.1, 0.2, 0.3, 0.3, 0.2, 0.1, 0.3} //8th rank
+	};
+
+	double knightPlacement[8][8] = {
+		{-0.3, 0, 0, 0, 0, 0, 0, -0.3}, //1st rank
+		{-0.1, 0, 0, 0, 0, 0, 0, -0.1}, //2nd rank
+		{-0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, -0.1}, //3rd rank
+		{-0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, -0.1}, //4th rank
+		{-0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, -0.1}, //5th rank
+		{-0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, -0.1}, //6th rank
+		{-0.1, 0, 0, 0, 0, 0, 0, -0.1}, //7th rank
+		{-0.3, 0, 0, 0, 0, 0, 0, -0.3} //8th rank
+	};
+
+	double kingPlacement[8][8] = {
+		{0, 0, 0, 0, 0, 0, 0, 0}, //1st rank
+		{0, 0, 0, 0, 0, 0, 0, 0}, //2nd rank
+		{0, 0, 0, 0, 0, 0, 0, 0}, //3rd rank
+		{0, 0, 0, 0, 0, 0, 0, 0}, //4th rank
+		{0, 0, 0, 0, 0, 0, 0, 0}, //5th rank
+		{0, 0, 0, 0, 0, 0, 0, 0}, //6th rank
+		{0, 0, 0, 0, 0, 0, 0, 0}, //7th rank
+		{0, 0, 0, 0, 0, 0, 0, 0} //8th rank
+	};
+
+	if (file_rank == "//") {}
+
+	char file = file_rank.substr(0, 1)[0];
+	int fileInt = 0;
+	int rank = std::stoi(file_rank.substr(1, 1));
+	int rankInt = rank - 1;
+
+	for (int i = 0; i < 8; i++) {
+		if (files[i] == file) {
+			fileInt = i;
+			break;
+		}
+	}
+
+	if (piece == 'P')
+		return whitePawnPlacement[rankInt][fileInt];
+	else if (piece == 'p')
+		return blackPawnPlacement[rankInt][fileInt];
+	else if (piece == 'R')
+		return whiteRookPlacement[rankInt][fileInt];
+	else if (piece == 'r')
+		return blackRookPlacement[rankInt][fileInt];
+	else if (piece == 'n' || piece == 'N')
+		return knightPlacement[rankInt][fileInt];
+	else if (piece == 'b' || piece == 'B')
+		return bishopPlacement[rankInt][fileInt];
+	else if (piece == 'q' || piece == 'Q')
+		return queenPlacement[rankInt][fileInt];
+	else if (piece == 'k' || piece == 'K')
+		return kingPlacement[rankInt][fileInt];
+	else {
+		std::cout << "Abort 1 called from Board::adjustEvalByPiecePlacement";
+		abort();
+	}
+}
