@@ -66,6 +66,7 @@ void Board::makeMove(std::string algebraicMove) { //O(1) --> even though substr 
 		std::cout << "Abort 1 called from Board::makeMove";
 		abort();
 	}
+
 	std::string originatingSquare = algebraicMove.substr(0, 2);
 	std::string endingSquare = algebraicMove.substr(3, 2);
 

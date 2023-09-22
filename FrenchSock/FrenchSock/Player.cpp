@@ -58,6 +58,9 @@ AI_Player::move AI_Player::chooseMoveHelper(int depth, std::string maximizingPla
 			std::string squareOfPiece = piecesRemaining[piece].file + std::to_string(piecesRemaining[piece].rank);
 			std::vector<std::string> moves = playerBoard->legalMoves(squareOfPiece);
 			for (int i = 0; i < moves.size(); i++) {
+				//store current piece on square we'll move to:
+				char capturedPiece = boardCpy[moves[i]]->piece;
+
 				boardCpy.makeMove(squareOfPiece + ":" + moves[i]);
 				move nextEval{ squareOfPiece + ":" + moves[i], chooseMoveHelper(depth - 1, "white", boardCpy, squareOfPiece + ":" + moves[i]).eval };
 
@@ -67,6 +70,7 @@ AI_Player::move AI_Player::chooseMoveHelper(int depth, std::string maximizingPla
 				if (nextEval.eval < minEvalMove.eval)
 					minEvalMove = nextEval;
 				boardCpy.makeMove(moves[i] + ":" + squareOfPiece);
+				boardCpy.editSquare(boardCpy[moves[i]], capturedPiece);
 			}
 		}
 		return minEvalMove;

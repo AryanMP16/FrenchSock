@@ -9,6 +9,7 @@ public:
 	Player(std::string name, std::string side, Board* board) : playerName(name), playerSide(side), playerBoard(board) {}
 	virtual std::string chooseMove() = 0;
 	std::string side() { return playerSide; }
+	std::string name() { return playerName; }
 protected:
 	std::string playerName;
 	std::string playerSide;
